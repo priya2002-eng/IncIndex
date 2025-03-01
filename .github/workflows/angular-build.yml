@@ -17,18 +17,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Debug - List Files
+        run: ls -R
+        working-directory: ${{ github.workspace }}
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Use the Node.js version your project needs
+          node-version: 18  # Adjust as needed
 
       - name: Install dependencies
         run: npm install
-        working-directory: frontend
+        working-directory: ${{ github.workspace }}  # No 'frontend' folder
 
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+      - name: Install Angular CLI (Locally)
+        run: npm install @angular/cli
 
       - name: Build Angular App
         run: npx ng build --configuration=production
-
+        working-directory: ${{ github.workspace }}
